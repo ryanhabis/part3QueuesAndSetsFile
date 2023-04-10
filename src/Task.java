@@ -1,3 +1,4 @@
+
 import java.time.LocalDate;
 public class Task implements Comparable <Task>
 {
@@ -6,6 +7,16 @@ public class Task implements Comparable <Task>
     private LocalDate deadline;
     private final LocalDate currentTime = LocalDate.now();
 
+
+    /**
+     * Constructs a new Task with the specified owner, description, and deadline.
+     * Throws an IllegalAccessException if the deadline is before the current time.
+     *
+     * @param owner      The owner of the task.
+     * @param description The description of the task.
+     * @param deadline   The deadline for the task.
+     * @throws IllegalAccessException If the deadline is before the current time.
+     */
     public Task(String owner, String description, LocalDate deadline) throws IllegalAccessException
     {
         if (currentTime.compareTo(deadline) >= 0)
@@ -46,6 +57,14 @@ public class Task implements Comparable <Task>
         return deadline;
     }
 
+
+    /**
+     * Sets the deadline of the task.
+     * Throws an IllegalAccessException if the deadline is before the current time.
+     *
+     * @param deadline The deadline of the task.
+     * @throws IllegalAccessException If the deadline is before the current time.
+     */
     public void setDeadline(LocalDate deadline) throws IllegalAccessException
     {
         if (deadline.isBefore(currentTime))
@@ -60,12 +79,25 @@ public class Task implements Comparable <Task>
         return currentTime;
     }
 
+    /**
+     * Compares this task to another task based on their deadline.
+     *
+     * @param o The task to compare to.
+     * @return A negative integer if this task's deadline is before the other task's deadline,
+     *         a positive integer if this task's deadline is after the other task's deadline,
+     *         or zero if both tasks have the same deadline.
+     */
     public int compareTo(Task o)
     {
         return this.deadline.compareTo(o.getDeadline());
     }
 
-
+    /**
+     * Compares this task to another object for equality.
+     *
+     * @param o The object to compare to.
+     * @return true if the objects are equal, false otherwise.
+     */
     @Override
     public boolean equals(Object o)
     {
