@@ -183,12 +183,21 @@ class BoundedPriorityQueueSetTest
     @Test
     void indexOf()
     {
+
     }
 
     @Test
     void add()
     {
+        System.out.println("Testing add() method");
+        BoundedPriorityQueueSet set = new BoundedPriorityQueueSet();
 
+        set.add(first);
+
+        int excpected = 1;
+        int actual = set.size();
+
+        assertEquals(excpected, actual);
     }
 
     @Test
