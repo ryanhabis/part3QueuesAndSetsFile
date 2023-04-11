@@ -1,4 +1,5 @@
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class BoundedPriorityQueueSet
 {
@@ -231,4 +232,27 @@ public class BoundedPriorityQueueSet
         return sb.toString(); // Convert the StringBuilder to a string and return
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof BoundedPriorityQueueSet)) return false;
+
+        BoundedPriorityQueueSet set = (BoundedPriorityQueueSet) o;
+
+        if (size != set.size) return false;
+        if (MAXIMUM_SIZE != set.MAXIMUM_SIZE) return false;
+        if (!Objects.equals(first, set.first)) return false;
+        return Objects.equals(last, set.last);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int result = size;
+        result = 31 * result + (first != null ? first.hashCode() : 0);
+        result = 31 * result + (last != null ? last.hashCode() : 0);
+        result = 31 * result + MAXIMUM_SIZE;
+        return result;
+    }
 }

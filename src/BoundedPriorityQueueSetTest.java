@@ -175,17 +175,64 @@ class BoundedPriorityQueueSetTest
 
         // Test contains() with an element that is present in the set
         boolean actual = set.contains(first);
-
         assertTrue(actual);
 
     }
 
+    /**
+    * This test validates the functionality of the indexOf() method of BoundedPriorityQueueSet by adding elements
+    * to the set and checking the expected index values of those elements using the assertEquals() method.
+    *
+    * Test steps:
+    * 1. Create a new BoundedPriorityQueueSet.
+    * 2. Add elements to the set using the add() method.
+    * 3. Call the indexOf() method on the set to get the actual index values of the elements.
+    * 4. Assert the expected index values against the actual index values returned by the method.
+    * 5. Create an empty BoundedPriorityQueueSet.
+    * 6. Call the indexOf() method on the empty set to check the behavior when the set is empty.
+    *
+    * This test includes assertions to validate the correctness of the indexOf() method, and a console output
+    * to indicate the purpose of the test.
+    */
     @Test
     void indexOf()
     {
+        System.out.println("Testing indexOf() method of BoundedPriorityQueueSet");
 
+        // Create a new BoundedPriorityQueueSet
+        BoundedPriorityQueueSet set = new BoundedPriorityQueueSet();
+
+        // Add elements to the set
+        set.add(first);
+        set.add(second);
+        set.add(third);
+        set.add(fourth);
+        set.add(five);
+
+        // Test scenarios where the element is present in the set
+        assertEquals(1, set.indexOf(first));
+        assertEquals(2, set.indexOf(third));
+        assertEquals(4, set.indexOf(five));
+
+        // Test scenarios where the set is empty
+        BoundedPriorityQueueSet emptySet = new BoundedPriorityQueueSet();
+        assertEquals(-1, emptySet.indexOf(first));
     }
 
+
+    /**
+     *  This test validates the functionality of the add() method of BoundedPriorityQueueSet by adding an element
+     * to the set and checking if the size of the set matches the expected size.
+     *
+     * Test steps:
+     * 1. Create a new BoundedPriorityQueueSet.
+     * 2. Add an element to the set using the add() method.
+     * 3. Call the size() method to get the actual size of the set.
+     * 4. Assert the expected size value against the actual size value returned by the method.
+     *
+     * This test includes an assertion to validate the correctness of the add() method, and a console output to
+     * indicate the purpose of the test.
+     */
     @Test
     void add()
     {
@@ -194,16 +241,17 @@ class BoundedPriorityQueueSetTest
 
         set.add(first);
 
-        int excpected = 1;
+        int expected = 1;
         int actual = set.size();
 
-        assertEquals(excpected, actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     void testPeek() {
         System.out.println("Testing peek() method");
         BoundedPriorityQueueSet set = new BoundedPriorityQueueSet();
+
 
         set.add(second);
         set.add(first);
@@ -229,23 +277,23 @@ class BoundedPriorityQueueSetTest
      * 6. Assert that the actual result is false, indicating that the element is not present in the set.
      */
     @Test
-    void remove()
-    {
+    void testRemove() {
         System.out.println("Testing remove() method");
         BoundedPriorityQueueSet set = new BoundedPriorityQueueSet();
 
-        // Add a set of elements to the set
+        // Add elements to the set
         set.add(first);
         set.add(second);
         set.add(third);
-        set.add(fourth);
 
-        Task expected = first;
-
-        // Test remove() the first element that is present in the set
+        // Test removing the first element from the set
         Task actual = set.remove();
 
+        // Assert that the removed task matches the expected task
+        assertEquals(first, actual);
 
-        assertEquals(actual,expected);
+        // Assert that the size of the set is updated correctly
+        assertEquals(2, set.size());
     }
+
 }
