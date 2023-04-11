@@ -99,36 +99,42 @@ public class BoundedPriorityQueueSet
      * Adds a Task to the queue in the appropriate position based on its priority relative to what is already in the queue.
      * Throws an IllegalStateException if the queue is full when this method is called.
      * Throws a DuplicateElementException if the Task is already present in the queue.
+     *
      * @param value the Task to be added to the queue
-     * @return the position at which the Task was added
+     * @return true if the Task was added successfully, false otherwise
      * @throws IllegalStateException if the queue is full
      * @throws DuplicateElementException if the Task is already present in the queue
      */
     public boolean add(Task value) {
 
-            if (contains(value)) {
-                throw new DuplicateElementException("Task already present in the queue.");
-            }
-
+        if (contains(value)) {
+            throw new DuplicateElementException("Task already present in the queue.");
+        }
 
         if (isFull()) {
             throw new IllegalStateException("Priority queue is full.");
         }
+
         Node newNode = new Node(value);
-        if(isEmpty()){
+
+        if (isEmpty()) {
+            // If the queue is empty, set the newNode as the first and last element
             first = newNode;
             last = newNode;
-        }else if(value.getDeadline().compareTo(first.data.getDeadline()) < 0){
+        } else if (value.getDeadline().compareTo(first.data.getDeadline()) < 0) {
+            // If the Task has the earliest deadline, set it as the new first element
             newNode.next = first;
             first = newNode;
-        }else if(value.getDeadline().compareTo(first.data.getDeadline()) >= 0){
+        } else if (value.getDeadline().compareTo(first.data.getDeadline()) >= 0) {
+            // If the Task has the latest or equal deadline, set it as the new last element
             last.next = newNode;
             last = newNode;
-        }else{
+        } else {
+            // Otherwise, iterate through the queue to find the correct position to insert the Task
             Node current = first.next;
             Node previous = first;
 
-            while(current.data.getDeadline().compareTo(value.getDeadline()) >= 0){
+            while (current.data.getDeadline().compareTo(value.getDeadline()) >= 0) {
                 previous = current;
                 current = current.next;
             }
@@ -140,6 +146,7 @@ public class BoundedPriorityQueueSet
         size++;
         return true;
     }
+
 
     protected static class Node {
 
@@ -204,16 +211,24 @@ public class BoundedPriorityQueueSet
         return original;
     }
 
+    /**
+     * Convert the TaskQueue object to a string representation.
+     *
+     * @return The string representation of the TaskQueue object.
+     */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("{");
-        Node currentNode = first;
-        while(currentNode.next != null){
-            sb.append(currentNode.data).append(", ");
-            currentNode = currentNode.next;
+        StringBuilder sb = new StringBuilder("{"); // Create a StringBuilder to construct the string
+        Node currentNode = first; // Start from the first Node in the queue
+
+        // Iterate through each Node in the queue until the last Node
+        while (currentNode.next != null) {
+            sb.append(currentNode.data).append(", "); // Append the data of the current Node to the StringBuilder
+            currentNode = currentNode.next; // Move to the next Node in the queue
         }
-        sb.append(currentNode.data).append("}");
-        return sb.toString();
+
+        sb.append(currentNode.data).append("}"); // Append the data of the last Node to the StringBuilder
+        return sb.toString(); // Convert the StringBuilder to a string and return
     }
 
 }
